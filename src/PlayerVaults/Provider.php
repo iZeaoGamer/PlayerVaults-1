@@ -62,22 +62,22 @@ class Provider{
 
         $core = PlayerVaults::getInstance();
         $this->server = $core->getServer();
-        $this->setInventoryName($core->getFromConfig("vaultinv-name") ?? "");
+        $this->setInventoryName($core->getFromConfig("echestinv-name") ?? "");
 
-        if(is_file($oldfile = $core->getDataFolder()."vaults.json")){
+        if(is_file($oldfile = $core->getDataFolder()."echest.json")){
             $data = json_decode(file_get_contents($oldfile));
             $logger = $core->getLogger();
             foreach($data as $k => $v){
-                file_put_contents($core->getDataFolder()."vaults/".$k.".json", json_encode($v, JSON_PRETTY_PRINT));
-                $logger->notice("Moved $k's vault data to /vaults.");
+                file_put_contents($core->getDataFolder()."echest/".$k.".json", json_encode($v, JSON_PRETTY_PRINT));
+                $logger->notice("Moved $k's vault data to /echest.");
             }
             rename($oldfile, $oldfile.".bak");
-        }elseif(is_file($oldfile = $core->getDataFolder()."vaults.yml")){
+        }elseif(is_file($oldfile = $core->getDataFolder()."echests.yml")){
             $data = yaml_parse_file($oldfile);
             $logger = $core->getLogger();
             foreach($data as $k => $v){
-                yaml_emit_file($core->getDataFolder()."vaults/".$k.".yml", $v);
-                $logger->notice("Moved $k's vault data to /vaults.");
+                yaml_emit_file($core->getDataFolder()."echest/".$k.".yml", $v);
+                $logger->notice("Moved $k's vault data to /echest.");
             }
             rename($oldfile, $oldfile.".bak");
         }
@@ -85,7 +85,7 @@ class Provider{
         switch($type){
             case Provider::JSON:
             case Provider::YAML:
-                $this->data = $core->getDataFolder().'vaults/';
+                $this->data = $core->getDataFolder().'echest/';
                 break;
             case Provider::MYSQL:
                 $this->data = $core->getMysqlData();
@@ -98,8 +98,8 @@ class Provider{
         return $this->server;
     }
 
-    private function getInventoryName(int $vaultno) : string{
-        return str_replace("{VAULTNO}", $vaultno, $this->inventoryName);
+    private function getInventoryName(int $echestno) : string{
+        return str_replace("{ECHESTNO}", $echestno, $this->inventoryName);
     }
 
     public function setInventoryName(string $name){
@@ -119,14 +119,14 @@ class Provider{
             $vaultof = $player->getLowerCaseName();
         }
         $tile = Tile::createTile("Vault", $level = $player->getLevel(), new CompoundTag("", [
-            new StringTag("id", Tile::CHEST),
+            new StringTag("id", Tile::ENDER_CHEST),
             new StringTag("CustomName", $this->getInventoryName($number)),
             new IntTag("x", (int) $player->x),
             new IntTag("y", (int) $player->y + Provider::INVENTORY_HEIGHT),
             new IntTag("z", (int) $player->z),
-            new ByteTag("Vault", 1),
-            new IntTag("VaultNumber", $number),
-            new StringTag("VaultOf", $vaultof)
+            new ByteTag("EChest", 1),
+            new IntTag("EChestNumber", $number),
+            new StringTag("EChestOf", $vaultof)
         ]));
 
         $block = Block::get(Block::CHEST);
@@ -141,8 +141,8 @@ class Provider{
         return $inventory;
     }
 
-    public function saveContents(Vault $tile, array $contents){
-        $player = $tile->namedtag["VaultOf"];
+    public function saveContents(EChest $tile, array $contents){
+        $player = $tile->namedtag["EChestOf"];
 
         foreach ($contents as &$item) {
             $item = $item->nbtSerialize(-1, "Item");
@@ -155,7 +155,7 @@ class Provider{
         $nbt->setData($tag);
         $contents = base64_encode($nbt->writeCompressed(ZLIB_ENCODING_DEFLATE));
 
-        $this->getServer()->getScheduler()->scheduleAsyncTask(new SaveInventoryTask($player, $this->type, $this->data, $tile->namedtag["VaultNumber"], $contents));
+        $this->getServer()->getScheduler()->scheduleAsyncTask(new SaveInventoryTask($player, $this->type, $this->data, $tile->namedtag["EChestNumber"], $contents));
     }
 
     public function deleteVault(string $player, int $vault){
