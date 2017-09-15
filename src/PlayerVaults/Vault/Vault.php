@@ -27,9 +27,9 @@ use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\Player;
-use pocketmine\tile\Chest;
+use pocketmine\tile\EnderChest;
 
-class Vault extends Chest{
+class Vault extends EnderChest{
 
     public function __construct(Level $level, CompoundTag $nbt){
         parent::__construct($level, $nbt);
