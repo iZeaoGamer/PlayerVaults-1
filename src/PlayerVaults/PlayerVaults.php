@@ -41,7 +41,7 @@ class PlayerVaults extends PluginBase{
     public function onEnable(){
         self::$instance = $this;
         $this->getLogger()->notice(implode(TF::RESET.PHP_EOL.TF::YELLOW, [
-            'Loaded PlayerVaults by Muqsit (Twitter: @muqsitrayyan)',
+            'Loaded EnderChest by Zeao (Twitter: @muqsitrayyan)',
             '   ___ _                                        _ _       ',
             '  / _ \ | __ _ _   _  ___ _ __/\   /\__ _ _   _| | |_ ___ ',
             ' / /_)/ |/ _" | | | |/ _ \ "__\ \ / / _" | | | | | __/ __|',
@@ -68,7 +68,7 @@ class PlayerVaults extends PluginBase{
         $type = $this->getConfig()->get("provider", "json");
         $type = Provider::TYPE_FROM_STRING[strtolower($type)] ?? Provider::UNKNOWN;
         $this->mysqldata = array_values($this->getConfig()->get("mysql", []));
-        $this->maxvaults = $this->getConfig()->get("max-echests", 25);
+        $this->maxechests = $this->getConfig()->get("max-echests", 25);
         if($type === Provider::MYSQL){
             $mysql = new \mysqli(...$this->mysqldata);
             $db = $this->mysqldata[3];
