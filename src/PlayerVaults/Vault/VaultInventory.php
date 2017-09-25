@@ -31,7 +31,7 @@ use pocketmine\Player;
 class VaultInventory extends ChestInventory{
 
     public function __construct(Vault $tile){
-        parent::__construct($tile, WindowHolder::get(WindowHolder::CHEST));
+        parent::__construct($tile, WindowTypes::get(WindowTypes::CHEST));
     }
 
     public function onClose(Player $who){
