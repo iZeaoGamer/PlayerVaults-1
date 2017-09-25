@@ -25,13 +25,13 @@ namespace PlayerVaults\Vault;
 
 use PlayerVaults\PlayerVaults;
 
-use pocketmine\inventory\{ChestInventory, InventoryType};
+use pocketmine\inventory\{ChestInventory, WindowHolder};
 use pocketmine\Player;
 
 class VaultInventory extends ChestInventory{
 
     public function __construct(Vault $tile){
-        parent::__construct($tile, InventoryType::get(InventoryType::CHEST));
+        parent::__construct($tile, WindowHolder::get(WindowHolder::CHEST));
     }
 
     public function onClose(Player $who){
