@@ -93,7 +93,7 @@ class FetchInventoryTask extends AsyncTask{
         if(empty($data)){
             $this->setResult([]);
         }else{
-            $nbt = new NetworkLittleEndianNBTStream);
+            $nbt = new NetworkLittleEndianNBTStream();
             $nbt->readCompressed($data);
             $nbt = $nbt->getData();
             $items = $nbt->ItemList ?? [];
