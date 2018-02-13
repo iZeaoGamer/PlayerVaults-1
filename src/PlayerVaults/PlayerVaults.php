@@ -237,7 +237,7 @@ class PlayerVaults extends PluginBase {
                     }
                 }
             }else{
-                if($sender->isOp()){
+                if($sender->hasPermission("playervault.admin".$args[0])){
                     switch(strtolower($args[0])){
                         case "of":
                             if(!isset($args[1])){
@@ -303,7 +303,7 @@ class PlayerVaults extends PluginBase {
                 TF::GREEN."§6/$cmd <#> - ".TF::YELLOW."§3Open vault #.",
                 TF::GREEN."§6/$cmd about - ".TF::YELLOW."§3Get information about plugin."
             ]));
-            if($sender->isOp()){
+            if($sender->hasPermission("playervaults.admin".$args[0])){
                 $sender->sendMessage(TF::RED."§aPlease use: §b'/$cmd admin' §afor a list of admin commands.");
             }
         }
