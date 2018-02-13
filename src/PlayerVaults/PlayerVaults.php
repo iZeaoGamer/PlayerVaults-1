@@ -221,18 +221,18 @@ class PlayerVaults extends PluginBase {
         if(isset($args[0]) && $args[0] !== "help" && $args[0] !== ""){
             if(is_numeric($args[0])){
                 if(strpos($args[0], ".") !== false){
-                    $sender->sendMessage(TF::RED."Please insert a valid number.");
+                    $sender->sendMessage(TF::RED."§2Please insert a valid number.");
                 }elseif($args[0] < 1 || $args[0] > $this->getMaxVaults()){
-                    $sender->sendMessage(TF::YELLOW."Usage: ".TF::WHITE."/pv <1-".$this->getMaxVaults().">");
+                    $sender->sendMessage(TF::YELLOW."§aPlease use: §b".TF::WHITE."/pv <1-".$this->getMaxVaults().">");
                 }else{
                     if($sender->y + Provider::INVENTORY_HEIGHT > Level::Y_MAX){
-                        $sender->sendMessage(TF::RED."Cannot open vault at this height. Please lower down to at least Y=".Level::Y_MAX - Provider::INVENTORY_HEIGHT);
+                        $sender->sendMessage(TF::RED."§2Cannot open vault at this height. Please lower down to at least Y=§3".Level::Y_MAX - Provider::INVENTORY_HEIGHT);
                     }else{
                         if($sender->hasPermission("playervaults.vault.".$args[0])){
-                            $sender->sendMessage(TF::YELLOW."Opening vault ".TF::AQUA."#".$args[0]."...");
+                            $sender->sendMessage(TF::YELLOW."§5Opening vault §b".TF::AQUA."#".$args[0]."...");
                             $this->getData()->sendContents($sender, $args[0]);
                         }else{
-                            $sender->sendMessage(TF::RED."You don't have permission to access vault #".$args[0]);
+                            $sender->sendMessage(TF::RED."§2You don't have permission to access vault §3#".$args[0]);
                         }
                     }
                 }
@@ -241,7 +241,7 @@ class PlayerVaults extends PluginBase {
                     switch(strtolower($args[0])){
                         case "of":
                             if(!isset($args[1])){
-                                $sender->sendMessage(TF::RED."Usage: /$cmd of <player> <number=1>");
+                                $sender->sendMessage(TF::RED."§aPlease use: §b/$cmd of <player> <number=1>");
                             }else{
                                 if(($player = $this->getServer()->getPlayer($args[1])) !== null){
                                     $args[1] = $player->getLowerCaseName();
@@ -249,33 +249,33 @@ class PlayerVaults extends PluginBase {
                                 }
                                 $args[2] = $args[2] ?? 1;
                                 if(!is_numeric($args[2])){
-                                    $sender->sendMessage(TF::RED."Usage: /$cmd of <player> <1-".$this->getMaxVaults().">");
+                                    $sender->sendMessage(TF::RED."§aPlease use: §b/$cmd of <player> <1-".$this->getMaxVaults().">");
                                     return false;
                                 }
                                 $this->getData()->sendContents($args[1], $args[2] ?? 1, $sender->getName());
-                                $sender->sendMessage(TF::YELLOW."Opening vault ".TF::AQUA."#".($args[2] ?? 1)." of ".($player ?? $args[1])."...");
+                                $sender->sendMessage(TF::YELLOW."§5pening vault §b".TF::AQUA."#".($args[2] ?? 1)." of ".($player ?? $args[1])."...");
                             }
                             return true;
                         case "empty":
                             if(!isset($args[1])){
-                                $sender->sendMessage(TF::RED."Usage: /$cmd empty <player> <number|all>");
+                                $sender->sendMessage(TF::RED."§aPlease use: §b/$cmd empty <player> <number|all>");
                             }else{
-                                if(($player = $this->getServer()->getPlayerExact($args[1])) !== null){
+                                if(($player = $this->getServer()->getPlayer($args[1])) !== null){
                                     $args[1] = $player->getLowerCaseName();
                                     $player = $player->getName();
                                 }
                                 if(!isset($args[2]) || ($args[2] != "all" && !is_numeric($args[2]))){
-                                    $sender->sendMessage(TF::RED."Usage: /$cmd empty <player> <number|all>");
+                                    $sender->sendMessage(TF::RED."§aPlease use: §b/$cmd empty <player> <number|all>");
                                 }else{
                                     if((is_numeric($args[2]) && ($args[2] >= 1 || $args[2] <= $this->getMaxVaults())) || $args[2] == "all"){
                                         $this->getData()->deleteVault(strtolower($player ?? $args[1]), $args[2] == "all" ? -1 : $args[2]);
                                         if($args[2] == "all"){
-                                            $sender->sendMessage(TF::YELLOW."Deleted all vaults of ".($player ?? $args[1]).".");
+                                            $sender->sendMessage(TF::YELLOW."§dDeleted all vaults of §5".($player ?? $args[1]).".");
                                         }else{
-                                            $sender->sendMessage(TF::YELLOW."Deleted ".($player ?? $args[1])."'s vault #".$args[2].".");
+                                            $sender->sendMessage(TF::YELLOW."§dDeleted §5".($player ?? $args[1])."'s §dvault #".$args[2].".");
                                         }
                                     }else{
-                                        $sender->sendMessage(TF::RED."Usage: /$cmd empty ".$args[1]." <1-".$this->getMaxVaults().">");
+                                        $sender->sendMessage(TF::RED."§aPlease use: §b/$cmd empty ".$args[1]." <1-".$this->getMaxVaults().">");
                                     }
                                 }
                             }
@@ -292,19 +292,19 @@ class PlayerVaults extends PluginBase {
                         return true;
                     case "admin":
                         $sender->sendMessage(implode(TF::RESET.PHP_EOL, [
-                            TF::GREEN."/$cmd of <player> <number=1> - ".TF::YELLOW."Show <player>'s vault contents.",
-                            TF::GREEN."/$cmd empty <player> <number|all> - ".TF::YELLOW."Empty <player>'s vault #number or all their vaults."
+                            TF::GREEN."§4/$cmd of <player> <number=1> - ".TF::YELLOW."§cShow <player>'s vault contents.",
+                            TF::GREEN."§4/$cmd empty <player> <number|all> - ".TF::YELLOW."§cEmpty <player>'s vault #number or all their vaults."
                         ]));
                         return true;
                 }
             }
         }else{
             $sender->sendMessage(implode(TF::RESET.PHP_EOL, [
-                TF::GREEN."/$cmd <#> - ".TF::YELLOW."Open vault #.",
-                TF::GREEN."/$cmd about - ".TF::YELLOW."Get information about plugin."
+                TF::GREEN."§6/$cmd <#> - ".TF::YELLOW."§3Open vault #.",
+                TF::GREEN."§6/$cmd about - ".TF::YELLOW."§3Get information about plugin."
             ]));
             if($sender->isOp()){
-                $sender->sendMessage(TF::RED."Use '/$cmd admin' for a list of admin commands.");
+                $sender->sendMessage(TF::RED."§aPlease use: §b'/$cmd admin' §afor a list of admin commands.");
             }
         }
         return false;
