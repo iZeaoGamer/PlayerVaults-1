@@ -9,3 +9,5 @@ commands:
 permissions:
   playervaults.vault.1:
     default: true
+  playervault.admin:
+    default: op
