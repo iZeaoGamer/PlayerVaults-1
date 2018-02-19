@@ -237,7 +237,7 @@ class PlayerVaults extends PluginBase {
                     }
                 }
             }else{
-                if($sender->hasPermission("playervaults.admin".$args[0])){
+                if($sender->hasPermission("playervaults.admin")){
                     switch(strtolower($args[0])){
                         case "of":
                             if(!isset($args[1])){
