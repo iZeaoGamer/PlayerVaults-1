@@ -303,7 +303,7 @@ class PlayerVaults extends PluginBase {
                 TF::GREEN."§6/$cmd <#> - ".TF::YELLOW."§3Open vault #.",
                 TF::GREEN."§6/$cmd about - ".TF::YELLOW."§3Get information about plugin."
             ]));
-            if($sender->hasPermission("playervaults.admin".$args[0])){
+            if($sender->hasPermission("playervaults.admin"){
                 $sender->sendMessage(TF::RED."§aPlease use: §b'/$cmd admin' §afor a list of admin commands.");
             }
         }
