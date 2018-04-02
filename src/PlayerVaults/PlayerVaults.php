@@ -29,6 +29,7 @@ use pocketmine\command\{Command, CommandSender};
 use pocketmine\level\Level;
 use pocketmine\nbt\{BigEndianNBTStream, NetworkLittleEndianNBTStream};
 use pocketmine\plugin\PluginBase;
+use pocketmine\Server;
 use pocketmine\tile\Tile;
 use pocketmine\utils\TextFormat as TF;
 
@@ -231,6 +232,7 @@ class PlayerVaults extends PluginBase {
                     }else{
                         if($sender->hasPermission("playervaults.vault.".$args[0])){
                             $sender->sendMessage(TF::YELLOW."Opening vault ".TF::AQUA."#".$args[0]."...");
+                            $this->getServer()->broadcastMessage(TF::AQUA."$sender §3opened Vault §b#".$args[0]);
                             $this->getData()->sendContents($sender, $args[0]);
                         }else{
                             $sender->sendMessage(TF::RED."You don't have permission to access vault #".$args[0]);
