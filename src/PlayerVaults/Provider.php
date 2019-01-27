@@ -111,7 +111,7 @@ class Provider{
 
         self::$nbtWriter = new BigEndianNBTStream();
 
-        $this->menu = InvMenu::create(InvMenu::TYPE_CUSTOM, VaultInventory::class)
+        $this->menu = InvMenu::create(InvMenu::TYPE_CHEST, VaultInventory::class)
             ->sessionize()
             ->setInventoryCloseListener([$this, "saveContents"]);
     }
