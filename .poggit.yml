@@ -2,6 +2,7 @@
 branches:
 - master
 - dev
+- patch-4
 projects:
   PlayerVaults:
     path: ""
