@@ -6,7 +6,7 @@ projects:
   PlayerVaults:
     path: ""
     libs:
-      - src: muqsit/InvMenu/InvMenu
+      - src: iZeaoGamer/InvMenu/InvMenu
         version: ^2.0.1
       - src: poggit/libasynql/libasynql
         version: ^3.1.1
