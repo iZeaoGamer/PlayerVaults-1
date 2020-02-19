@@ -14,7 +14,7 @@ final class PermissionManager{
 	private $grouping = [];
 
 	public function __construct(Config $config){
-		if($config->get("enabled", false)){
+		if($config->get("enabled")){
 			foreach($config->get("permissions") as $permission => $vaults){
 				$this->registerGroup($permission, $vaults);
 			}
